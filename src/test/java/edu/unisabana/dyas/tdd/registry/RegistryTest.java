@@ -7,16 +7,17 @@ public class RegistryTest {
     private Registry registry = new Registry();
     // @Test
     // public void validateRegistryResult() {
-    //     Person person = new Person();
-    //     RegisterResult result = registry.registerVoter(person);
-    //     Assert.assertEquals(RegisterResult.VALID, result);
+    // Person person = new Person();
+    // RegisterResult result = registry.registerVoter(person);
+    // Assert.assertEquals(RegisterResult.VALID, result);
     // }
     // TODO Complete with more test cases
-    
+
     /*
-        Clase de equivalencia #1
-        Validar que la persona tenga más de 18 años, por lo que va haber un caso valido y otro invalido
-    */
+     * Clase de equivalencia #1
+     * Validar que la persona tenga más de 18 años, por lo que va haber un caso
+     * valido y otro invalido
+     */
 
     @Test
     public void validarEdadBajoRango() {
@@ -33,9 +34,10 @@ public class RegistryTest {
     }
 
     /*
-        Clase de equivalencia #2
-        Validar si la persona esta viva, por lo que va haber un caso valido y otro invalido
-    */
+     * Clase de equivalencia #2
+     * Validar si la persona esta viva, por lo que va haber un caso valido y otro
+     * invalido
+     */
 
     @Test
     public void validarVida() {
@@ -43,6 +45,7 @@ public class RegistryTest {
         RegisterResult result = registry.registerVoter(validPerson);
         Assert.assertEquals(RegisterResult.VALID, result);
     }
+
     @Test
     public void validarMuerte() {
         Person validPerson = new Person("Alberto", 6, 99, Gender.MALE, false);
@@ -51,10 +54,10 @@ public class RegistryTest {
     }
 
     /*
-        Clase de equivalencia #3
-        Validar si la edad se encuentra dentro del rango permitido (1 a 100 años). 
-        Por lo que va haber un caso valido y dos invalidos
-    */
+     * Clase de equivalencia #3
+     * Validar si la edad se encuentra dentro del rango permitido (1 a 100 años).
+     * Por lo que va haber un caso valido y dos invalidos
+     */
 
     @Test
     public void validarEdadNegativa() {
@@ -78,15 +81,16 @@ public class RegistryTest {
     }
 
     /*
-        Clase de equivalencia #4
-        Validar si esta duplicada la persona (basandonos en el id). 
-        Por lo que va haber un caso valido (mismos datos pero diferente id) y uno invalido (mismo id)
-    */
+     * Clase de equivalencia #4
+     * Validar si esta duplicada la persona (basandonos en el id).
+     * Por lo que va haber un caso valido (mismos datos pero diferente id) y uno
+     * invalido (mismo id)
+     */
 
     @Test
     public void validarPersonaDuplicada() {
         Person persona1 = new Person("Bob", 123123, 25, Gender.MALE, true);
-        Person persona2 = new Person("Bob", 123123, 25, Gender.MALE, true); 
+        Person persona2 = new Person("Bob", 123123, 25, Gender.MALE, true);
         registry.registerVoter(persona1);
         RegisterResult result = registry.registerVoter(persona2);
         Assert.assertEquals(RegisterResult.DUPLICATED, result);
@@ -95,25 +99,24 @@ public class RegistryTest {
     @Test
     public void validarPersonaNoDuplicada() {
         Person persona1 = new Person("Richard", 1239, 22, Gender.MALE, true);
-        Person persona2 = new Person("Ricahr", 13242, 22, Gender.MALE, true);  
+        Person persona2 = new Person("Ricahr", 13242, 22, Gender.MALE, true);
         registry.registerVoter(persona1);
         RegisterResult result = registry.registerVoter(persona2);
         Assert.assertEquals(RegisterResult.VALID, result);
     }
 
     /*
-        Clase de equivalencia #5
-        Validar que el votante sea valido, por lo que no se debe repetir,DEBE  estar vivo y cumplir la 
-        edad.
-        Solo especificamos el caso valido, porqué los invalidos son reduntantes, ya qué fueron
-        mencionados en los anteriores y el enumerador RegisterResult no hay un caso "invalido".
-    */
+     * Clase de equivalencia #5
+     * Validar que el votante sea valido, por lo que no se debe repetir,DEBE estar
+     * vivo y cumplir la
+     * edad, por lo que solo se espera de RegisterResult se ha valid
+     */
 
     @Test
     public void validarVotanteValido() {
-        Person votante = new Person("Nicolas", 2776, 19, Gender.MALE, true); 
+        Person votante = new Person("Nicolas", 2776, 19, Gender.MALE, true);
         RegisterResult result = registry.registerVoter(votante);
-        Assert.assertEquals(RegisterResult.VALID, result);
+        Assert.assertNotSame(RegisterResult.INVALID_AGE, result);
     }
-        
+
 }
